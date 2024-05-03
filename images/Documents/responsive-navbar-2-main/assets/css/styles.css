@@ -1,0 +1,374 @@
+/*=============== GOOGLE FONTS ===============*/
+@import url("https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@400;500&display=swap");
+
+/*=============== VARIABLES CSS ===============*/
+:root {
+  --header-height: 3.5rem;
+
+  /*========== Colors ==========*/
+  /*Color mode HSL(hue, saturation, lightness)*/
+  --white-color: hsl(0, 0%, 100%);
+  --black-color: hsl(0, 0%, 0%);
+
+  /*========== Font and typography ==========*/
+  /*.5rem = 8px | 1rem = 16px ...*/
+  --body-font: "Montserrat Alternates", sans-serif;
+  --h1-font-size: 1.5rem;
+  --normal-font-size: 0.938rem;
+
+  /*========== Font weight ==========*/
+  --font-regular: 400;
+  --font-medium: 500;
+
+  /*========== z index ==========*/
+  --z-tooltip: 10;
+  --z-fixed: 100;
+}
+
+/*========== Responsive typography ==========*/
+@media screen and (min-width: 1150px) {
+  :root {
+    --normal-font-size: 1rem;
+  }
+}
+
+/*=============== BASE ===============*/
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--body-font);
+  font-size: var(--normal-font-size);
+  background-color: var(--white-color);
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+/*=============== REUSABLE CSS CLASSES ===============*/
+.container {
+  max-width: 1120px;
+  margin-inline: 1.5rem;
+}
+
+/*=============== HEADER & NAV ===============*/
+.header {
+  position: fixed; /* Fix the navbar on scroll */
+  width: 100%;
+  top: 0;
+  left: 0;
+  background-color: var(--white-color);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Add shadow here */
+  transition: box-shadow 0.3s ease-in-out; /* Smooth transition for shadow */
+  z-index: var(--z-fixed);
+}
+
+.nav {
+  position: relative;
+  height: var(--header-height);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 2rem; /* Increased padding from 0 to 2rem (adjust as needed) */
+}
+
+
+
+.nav__logo img {
+  margin: 0 1rem 0 2rem; /* Adjust top, right, bottom, left margins (adjust as needed) */
+  padding: 8px;
+  align-self: cov3;
+  width: 160px;
+  height: 100px;
+}
+
+.nav__close,
+.nav__toggle {
+  display: flex;
+  color: var(--black-color);
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+/* Navigation for mobile devices */
+@media screen and (max-width: 1150px) {
+  .nav__menu {
+    position: fixed;
+    left: -100%;
+    top: 0;
+    background-color: var(--white-color);
+    width: 100%;
+    height: 100%;
+    padding: 6rem 3.5rem 4.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: left 0.4s;
+  }
+
+  .nav__item {
+    transform: translateX(-150px);
+    visibility: hidden;
+    transition: transform 0.4s ease-out, visibility 0.4s;
+  }
+
+  .nav__item:nth-child(1) {
+    transition-delay: 0.1s;
+  }
+  .nav__item:nth-child(2) {
+    transition-delay: 0.2s;
+  }
+  .nav__item:nth-child(3) {
+    transition-delay: 0.3s;
+  }
+  .nav__item:nth-child(4) {
+    transition-delay: 0.4s;
+  }
+  .nav__item:nth-child(5) {
+    transition-delay: 0.5s;
+  }
+}
+
+.nav__list,
+.nav__social {
+  display: flex;
+}
+
+.nav__list {
+  flex-direction: column;
+  row-gap: 3rem;
+  margin-inline-start: 2rem; /* Increased margin from 0 to 2rem (adjust as needed) */
+}
+
+
+.nav__link {
+  position: relative;
+  color: var(--black-color);
+  font-size: var(--h1-font-size);
+  font-weight: var(--font-medium);
+  display: inline-flex;
+  align-items: center;
+  transition: opacity 0.4s;
+}
+
+.nav__link i {
+  font-size: 2rem;
+  position: absolute;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s, visibility 0.4s;
+}
+
+.nav__link span {
+  position: relative;
+  transition: margin 0.4s;
+}
+
+.nav__link span::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0;
+  height: 2px;
+  background-color: var(--white-color);
+  transition: width 0.4s ease-out;
+}
+
+/* Animation link on hover */
+.nav__link:hover span {
+  margin-left: 2.5rem;
+}
+
+.nav__link:hover i {
+  opacity: 1;
+  visibility: visible;
+}
+
+.nav__link:hover span::after {
+  width: 100%;
+}
+
+/* Sibling fade animation */
+.nav__list:has(.nav__link:hover) .nav__link:not(:hover) {
+  opacity: 0.4;
+}
+
+.nav__close {
+  position: absolute;
+  top: 1rem;
+  right: 1.5rem;
+}
+
+.nav__social {
+  column-gap: 1rem;
+}
+
+.nav__social-link {
+  color: var(--white-color);
+  font-size: 1.5rem;
+  transition: transform 0.4s;
+}
+
+.nav__social-link:hover {
+  transform: translateY(-0.25rem);
+}
+
+/* Show menu */
+.show-menu {
+  left: 0;
+}
+
+/* Animation link when displaying menu */
+.show-menu .nav__item {
+  visibility: visible;
+  transform: translateX(0);
+}
+
+/*=============== BREAKPOINTS ===============*/
+/* For large devices */
+@media screen and (min-width: 1150px) {
+  .container {
+    margin-inline: auto;
+  }
+
+  .nav {
+    height: calc(var(--header-height) + 2rem);
+  }
+
+  .nav__toggle,
+  .nav__close {
+    display: none;
+  }
+
+  .nav__link {
+    font-size: var(--normal-font-size);
+  }
+
+  .nav__link i {
+    font-size: 1.5rem;
+  }
+
+  .nav__list {
+    flex-direction: row;
+    column-gap: 3.5rem;
+  }
+
+  .nav__menu {
+    display: flex;
+    align-items: center;
+    column-gap: 3.5rem;
+  }
+}
+
+/* nav dropdown */
+/* Styles for the dropdown menu */
+.dropdown-menu {
+  display: none;  /* Hide the dropdown menu by default */
+  position: absolute;  /* Position the menu relative to its parent */
+  background-color: var(--white-color);  /* Match navbar background */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);  /* Add subtle shadow */
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  z-index: var(--z-tooltip) + 1; /* Ensure menu appears above other elements */
+}
+
+.nav__link.dropdown:hover .dropdown-menu {  /* Show menu on hover for desktop */
+  display: block;
+}
+
+/* Mobile responsive styles */
+@media screen and (max-width: 1150px) {
+  .nav__link.dropdown {
+    position: relative;  /* Position dropdown for submenu arrow on mobile */
+  }
+
+  .nav__link.dropdown:after {
+    content: "";
+    display: block;
+    width: 0px;
+    height: 0px;
+    border-style: solid;
+    border-width: 0 5px 5px 0;
+    border-color: var(--black-color) transparent transparent transparent;
+    position: absolute;
+    top: 50%;
+    right: 1rem;
+    transform: translateY(-50%) rotate(90deg);
+    transition: transform 0.3s ease;
+  }
+
+  .nav__link.dropdown:hover:after {
+    transform: translateY(-50%) rotate(0deg);
+  }
+
+  .dropdown-menu {  /* Display dropdown menu on click for mobile */
+    display: none;
+    position: fixed;  /* Fix menu position on mobile */
+    left: 0;  /* Align menu to left side of screen */
+    top: 100%;  /* Position below navbar */
+    width: 100%;  /* Full width on mobile */
+    background-color: var(--white-color);  /* Match navbar background */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);  /* Add subtle shadow */
+    padding: 1rem;  /* Add padding for content */
+    z-index: var(--z-tooltip) + 1; /* Ensure menu appears above other elements */
+  }
+
+  .nav__link.dropdown.active .dropdown-menu {
+    display: block;  /* Show dropdown menu on click */
+  }
+}
+
+
+/* banner */
+
+.banner {
+  background-color: teal; /* Teal green background */
+  display: flex; /* Center content horizontally */
+  justify-content: center; /* Horizontally center icons and text */
+  padding: 1rem; /* Add some padding for better spacing */
+}
+
+.banner-content {
+  text-align: center; /* Center text vertically */
+}
+
+.banner__icon {
+  display: inline-block; /* Allow icons to stay next to text */
+  margin-right: 1rem; /* Space between icon and text */
+  font-size: 1.2rem; /* Adjust icon size as needed */
+  color: white; /* White icons for visibility */
+}
+
+.banner__text {
+  display: flex; /* Make text elements behave like a row */
+  flex-wrap: wrap; /* Wrap text to next line on mobile */
+  justify-content: center; /* Center text horizontally */
+  align-items: center; /* Vertically center text elements */
+}
+
+.banner__text span {
+  margin-right: 2rem; /* More spacing between text elements */
+  color: white; /* White text */
+}
+
+/* Media query for responsive design (adjust breakpoints as needed) */
+@media only screen and (max-width: 768px) {
+  .banner__text span {
+    margin-right: 1rem; /* Reduce spacing on smaller screens */
+    font-size: 0.8rem; /* Adjust font size for smaller screens */
+  }
+}
